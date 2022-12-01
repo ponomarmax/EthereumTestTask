@@ -28,6 +28,10 @@ namespace EthTestTask.Detecters
                 await DetectInternal(client, cancellationToken);
                 while (!cancellationToken.IsCancellationRequested) await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
             }
+            catch (TaskCanceledException e)
+            {
+                logger.LogInformation(e, "the cancelation token was triggered and the dectectored was completed");
+            }
             catch (Exception e)
             {
                 logger.LogError(e, "Something went wrong during detection");
